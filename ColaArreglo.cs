@@ -9,13 +9,12 @@ namespace Colas
 {
     public class ColaArreglo
     {
-        private int[] cola;
+        private int[] cola = Array.Empty<int>();
         private int frente;
         private int final;
 
         public ColaArreglo()
         {
-            cola = new int[10];
             frente = 0;
             final = -1;
         }
@@ -25,23 +24,22 @@ namespace Colas
             return final < frente;
         }
 
-        public bool EstaLlena()
-        {
-            return final == cola.Length - 1;
-        }
+        //public bool EstaLlena()
+        //{
+        //    return final == cola.Length - 1;
+        //}
 
         public void Encolar(int valor)
-        {
-            if (EstaLlena())
-            {
-                Console.WriteLine("La cola está llena");
-            }
-            else
-            {
-                final++;
-                cola[final] = valor;
+        {        
+                Array.Resize(ref cola, cola.Length + 1);
+                cola[cola.Length - 1] = valor;
+                final = cola.Length - 1;
                 Console.WriteLine("Dato agregado");
-            }
+        }
+
+        public int Tamaño()
+        {
+            return cola.Length;
         }
 
         public int Desencolar()
@@ -54,11 +52,22 @@ namespace Colas
             else
             {
                 int valor = cola[frente];
-                frente++;
+                
+                for(int i = 1; i < cola.Length; i++)
+                {
+                    cola[i - 1] = cola[i];
+                }
+
+                Array.Resize(ref cola, cola.Length - 1);
+                final = cola.Length - 1;
                 return valor;
             }
         }
 
+        public int Frente()
+        {
+            return cola[frente];
+        }
         public void Mostrar()
         {
             if (EstaVacia())
@@ -69,7 +78,7 @@ namespace Colas
             {
                 Console.WriteLine("Cola con arreglo:");
 
-                for (int i = frente; i <= final; i++)
+                for (int i = frente; i < cola.Length; i++)
                 {
                     Console.Write(cola[i] + " ");
                 }
