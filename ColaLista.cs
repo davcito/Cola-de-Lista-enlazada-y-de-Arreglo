@@ -11,6 +11,7 @@ namespace Colas
     {
         private Nodo primero;
         private Nodo ultimo;
+        private int cont = 0;
 
         public ColaLista()
         {
@@ -37,7 +38,7 @@ namespace Colas
                 ultimo.siguiente = nuevo;
                 ultimo = nuevo;
             }
-
+            cont++;
             Console.WriteLine("Dato agregado");
         }
 
@@ -57,7 +58,7 @@ namespace Colas
                 {
                     ultimo = null;
                 }
-
+                cont--;
                 return valor;
             }
         }
@@ -82,6 +83,22 @@ namespace Colas
 
                 Console.WriteLine();
             }
+        }
+        public int Frente()
+        {
+            if (EstaVacia())
+            {
+                return -1;
+            }
+            else
+            {
+                return primero.dato;
+            }
+        }
+
+        public int Tamaño()
+        {
+            return cont;
         }
     }
 }
